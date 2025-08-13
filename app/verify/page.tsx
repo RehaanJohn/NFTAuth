@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -55,11 +54,8 @@ export default function VerifyPage() {
 
   const verifyCredential = async () => {
     if (!tokenId.trim()) return
-
     setIsLoading(true)
     setHasSearched(true)
-
-    // Simulate API call delay
     setTimeout(() => {
       const result = mockCredentialData[tokenId]
       setVerificationResult(result || null)
@@ -73,30 +69,44 @@ export default function VerifyPage() {
     }
   }
 
+  const cardBase =
+    "bg-white/70 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700 rounded-2xl shadow-lg transition-colors duration-300"
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+    <div className="min-h-screen font-sans bg-gradient-to-br 
+        from-blue-50 via-white to-purple-50 
+        dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 
+        py-12 transition-colors duration-500">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Verify Academic Credential</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
+            Verify Academic
+            <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 
+              dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 
+              bg-clip-text text-transparent">
+              Credential
+            </span>
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Enter a token ID to instantly verify the authenticity of any blockchain-issued academic credential
           </p>
         </div>
 
         {/* Search Section */}
-        <Card className="mb-8">
+        <Card className={`${cardBase} mb-8`}>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Search className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+              <Search className="h-5 w-5 text-blue-600 dark:text-blue-400" />
               Credential Verification
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-600 dark:text-gray-300">
               Enter the token ID found on the digital credential to verify its authenticity
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="tokenId">Token ID</Label>
+              <Label htmlFor="tokenId" className="text-gray-700 dark:text-gray-200">Token ID</Label>
               <Input
                 id="tokenId"
                 placeholder="Enter token ID (e.g., 1001, 1002, 1003)"
@@ -109,7 +119,9 @@ export default function VerifyPage() {
             <Button
               onClick={verifyCredential}
               disabled={!tokenId.trim() || isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
+                dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600
+                text-white shadow-md"
               size="lg"
             >
               {isLoading ? "Verifying..." : "Verify Credential"}
@@ -119,9 +131,11 @@ export default function VerifyPage() {
 
         {/* Results Section */}
         {hasSearched && (
-          <Card>
+          <Card className={cardBase}>
             <CardHeader>
-              <CardTitle>Verification Result</CardTitle>
+              <CardTitle className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                Verification Result
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {verificationResult ? (
@@ -130,24 +144,24 @@ export default function VerifyPage() {
                   <div className="flex items-center gap-3">
                     {verificationResult.status === "verified" ? (
                       <>
-                        <CheckCircle className="h-8 w-8 text-green-600" />
+                        <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
                         <div>
-                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 hover:bg-green-100">
                             <CheckCircle className="h-3 w-3 mr-1" />
                             Verified
                           </Badge>
-                          <p className="text-sm text-gray-600 mt-1">This credential is authentic and valid</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">This credential is authentic and valid</p>
                         </div>
                       </>
                     ) : (
                       <>
-                        <XCircle className="h-8 w-8 text-red-600" />
+                        <XCircle className="h-8 w-8 text-red-600 dark:text-red-400" />
                         <div>
                           <Badge variant="destructive">
                             <XCircle className="h-3 w-3 mr-1" />
                             Revoked
                           </Badge>
-                          <p className="text-sm text-gray-600 mt-1">This credential has been revoked</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">This credential has been revoked</p>
                         </div>
                       </>
                     )}
@@ -159,37 +173,37 @@ export default function VerifyPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <FileText className="h-5 w-5 text-gray-400 mt-0.5" />
+                        <FileText className="h-5 w-5 text-gray-400" />
                         <div>
-                          <p className="font-medium text-gray-900">Degree</p>
-                          <p className="text-gray-600">{verificationResult.degreeName}</p>
-                          <p className="text-sm text-gray-500">{verificationResult.fieldOfStudy}</p>
+                          <p className="font-medium text-gray-900 dark:text-white">Degree</p>
+                          <p className="text-gray-600 dark:text-gray-300">{verificationResult.degreeName}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{verificationResult.fieldOfStudy}</p>
                         </div>
                       </div>
 
                       <div className="flex items-start gap-3">
-                        <User className="h-5 w-5 text-gray-400 mt-0.5" />
+                        <User className="h-5 w-5 text-gray-400" />
                         <div>
-                          <p className="font-medium text-gray-900">Student</p>
-                          <p className="text-gray-600">{verificationResult.studentName}</p>
+                          <p className="font-medium text-gray-900 dark:text-white">Student</p>
+                          <p className="text-gray-600 dark:text-gray-300">{verificationResult.studentName}</p>
                         </div>
                       </div>
 
                       <div className="flex items-start gap-3">
-                        <University className="h-5 w-5 text-gray-400 mt-0.5" />
+                        <University className="h-5 w-5 text-gray-400" />
                         <div>
-                          <p className="font-medium text-gray-900">University</p>
-                          <p className="text-gray-600">{verificationResult.universityName}</p>
+                          <p className="font-medium text-gray-900 dark:text-white">University</p>
+                          <p className="text-gray-600 dark:text-gray-300">{verificationResult.universityName}</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <Calendar className="h-5 w-5 text-gray-400 mt-0.5" />
+                        <Calendar className="h-5 w-5 text-gray-400" />
                         <div>
-                          <p className="font-medium text-gray-900">Date Issued</p>
-                          <p className="text-gray-600">
+                          <p className="font-medium text-gray-900 dark:text-white">Date Issued</p>
+                          <p className="text-gray-600 dark:text-gray-300">
                             {new Date(verificationResult.dateIssued).toLocaleDateString("en-US", {
                               year: "numeric",
                               month: "long",
@@ -200,20 +214,16 @@ export default function VerifyPage() {
                       </div>
 
                       <div>
-                        <p className="font-medium text-gray-900 mb-2">Issuer Address</p>
-                        <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono break-all">
+                        <p className="font-medium text-gray-900 dark:text-white mb-2">Issuer Address</p>
+                        <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono break-all">
                           {verificationResult.issuerAddress}
                         </code>
                       </div>
 
                       <div>
-                        <p className="font-medium text-gray-900 mb-2">Certificate Document</p>
-                        <Button variant="outline" size="sm" asChild>
-                          <a
-                            href={`https://ipfs.io/ipfs/${verificationResult.ipfsHash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                        <p className="font-medium text-gray-900 dark:text-white mb-2">Certificate Document</p>
+                        <Button variant="outline" size="sm" asChild className="border-gray-300 dark:border-gray-600">
+                          <a href={`https://ipfs.io/ipfs/${verificationResult.ipfsHash}`} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="h-4 w-4 mr-2" />
                             View on IPFS
                           </a>
@@ -226,9 +236,9 @@ export default function VerifyPage() {
                   {verificationResult.status === "revoked" && (
                     <>
                       <Separator />
-                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <h4 className="font-medium text-red-900 mb-2">Revocation Details</h4>
-                        <p className="text-sm text-red-700 mb-1">
+                      <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-4">
+                        <h4 className="font-medium text-red-900 dark:text-red-300 mb-2">Revocation Details</h4>
+                        <p className="text-sm text-red-700 dark:text-red-300 mb-1">
                           <strong>Revoked on:</strong>{" "}
                           {new Date(verificationResult.revokedDate).toLocaleDateString("en-US", {
                             year: "numeric",
@@ -236,7 +246,7 @@ export default function VerifyPage() {
                             day: "numeric",
                           })}
                         </p>
-                        <p className="text-sm text-red-700">
+                        <p className="text-sm text-red-700 dark:text-red-300">
                           <strong>Reason:</strong> {verificationResult.revokedReason}
                         </p>
                       </div>
@@ -245,9 +255,9 @@ export default function VerifyPage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <XCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Credential Not Found</h3>
-                  <p className="text-gray-600">
+                  <XCircle className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Credential Not Found</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
                     No credential found with token ID "{tokenId}". Please check the token ID and try again.
                   </p>
                 </div>
@@ -257,15 +267,15 @@ export default function VerifyPage() {
         )}
 
         {/* Help Section */}
-        <Card className="mt-8 bg-blue-50 border-blue-200">
+        <Card className={`${cardBase} mt-8 bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700`}>
           <CardContent className="pt-6">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Search className="h-4 w-4 text-blue-600" />
+              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
-                <h3 className="font-medium text-blue-900 mb-2">How to verify a credential</h3>
-                <ul className="text-sm text-blue-800 space-y-1">
+                <h3 className="font-medium text-blue-900 dark:text-blue-300 mb-2">How to verify a credential</h3>
+                <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
                   <li>• Find the token ID on the digital credential document</li>
                   <li>• Enter the token ID in the search field above</li>
                   <li>• Click "Verify Credential" to check authenticity</li>
