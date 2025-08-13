@@ -25,7 +25,7 @@ export default function Navbar() {
             <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">NC</span>
             </div>
-            <span className="font-bold text-xl text-gray-900 dark:text-white">NFT Credentials</span>
+            <span className="font-bold text-xl text-gray-900 dark:text-white">NFT Auth</span>
           </Link>
 
           {/* Desktop Navigation */}
